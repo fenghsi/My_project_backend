@@ -1,34 +1,14 @@
 package com.fintech.fintech.HTTP;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fintech.fintech.classes.finhub.CompanyNews;
 import com.fintech.fintech.classes.finhub.CompanyProfile2;
 import com.fintech.fintech.classes.finhub.StockSymbols;
 import com.fintech.fintech.classes.finhub.symbollookup.SymbolLookup;
-import io.netty.channel.ChannelOption;
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.*;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient.*;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import reactor.core.publisher.Mono;
-import reactor.netty.http.client.HttpClient;
-
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class FinHubRequester {
     @Autowired
@@ -53,12 +33,6 @@ public class FinHubRequester {
 
     public StockSymbols[] getStockSymbolsJson() {
         String uri = "/api/v1/stock/symbol?exchange=US";
-        ResponseEntity<StockSymbols[]> respEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, StockSymbols[].class);
-        return respEntity.getBody();
-    }
-
-    public StockSymbols[] getStockSymbolsJson(String exchange,String mic, String securityType, String currency ) {
-        String uri = "/api/v1/stock/symbol?exchange="+exchange;
         ResponseEntity<StockSymbols[]> respEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, StockSymbols[].class);
         return respEntity.getBody();
     }
